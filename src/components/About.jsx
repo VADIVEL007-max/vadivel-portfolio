@@ -1,7 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { RESUME_DATA } from '../data/resume';
-  import {profile} from '../assets/profile.jpg';
+  import {Profile} from '../assets/Profile.jpg';
 
 const About = () => {
   // Viewport animation configuration
@@ -105,7 +105,7 @@ const About = () => {
                 className="relative w-[260px] h-[320px] sm:w-[300px] sm:h-[360px] rounded-[32px] overflow-hidden border border-border dark:border-neutral-800 bg-bg-alt dark:bg-neutral-950"
               >
                 <motion.img
-                  src={profile}
+                  src={Profile}
                   alt={RESUME_DATA.name}
                   animate={{ scale: isHovered ? 1.08 : 1 }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
