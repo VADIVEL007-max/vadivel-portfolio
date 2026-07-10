@@ -1,9 +1,8 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-scroll';
 // import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 import { RESUME_DATA } from '../data/resume';
-// import { useEffect, useState } from 'react';
-import { TypeAnimation } from 'react-type-animation';
 
 const Hero = () => {
   // Animation Variants for staggering
@@ -27,20 +26,50 @@ const Hero = () => {
     },
   };
 
-  //  const [currentIndex, setCurrentIndex] = useState(0);
+  /**
+   * FIXED WIDTH FOR THE ANIMATED TITLE — desktop only, unchanged mechanism
+   *
+   * This is still needed on desktop: the container is sized to the
+   * *longest* possible title (not the currently active one) so its width
+   * never changes as titles cycle. It's no longer relevant on mobile at
+   * all, since mobile now renders a single static string with nothing to
+   * measure against — see the mobile/desktop split below.
+   */
+  const longestJobTitle = useMemo(
+    () =>
+      RESUME_DATA.jobTitles.reduce(
+        (longest, title) => (title.length > longest.length ? title : longest),
+        ''
+      ),
+    []
+  );
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentIndex((prev) => (prev + 1) % RESUME_DATA.jobTitles.length);
-  //   },3000); // 5 seconds
+  /**
+   * TEXT SWITCHER — desktop only, unchanged mechanism
+   * Simple index cycling on a fixed interval. This state and effect still
+   * run regardless of viewport size, but its output is only ever rendered
+   * inside the `hidden md:inline-flex` desktop block below — on mobile,
+   * this interval keeps ticking in the background but nothing on screen
+   * reflects it, since the mobile heading is static.
+   */
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % RESUME_DATA.jobTitles.length);
+    }, 2500);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <section 
       id="hero" 
-      className="relative min-h-screen flex items-center justify-center pt-24 pb-12 px-6 md:px-12 xl:px-24 bg-white overflow-hidden bg-linear-to-b from-blue-400 via-neutral-300 to-bg-alt "
+      /**
+       * Viewport height stability — unchanged from previous fix.
+       * `min-h-screen` (100vh) is the fallback; `min-h-[100dvh]` layered on
+       * top tracks the real mobile viewport as browser chrome shows/hides.
+       */
+      className="relative min-h-screen min-h-[100dvh] flex items-center justify-center pt-24 pb-12 px-6 sm:px-8 md:px-12 xl:px-24 bg-white overflow-hidden bg-linear-to-b from-blue-400 via-neutral-300 to-bg-alt "
     >
       {/* Background Decorative Blur (Subtle Vercel/Linear feel) */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-accent/5 rounded-full blur-3xl -z-10 pointer-events-none" />
@@ -62,7 +91,7 @@ const Hero = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
             </span>
-            Wellcome
+            Welcome
           </motion.div>
 
           {/* Main Headline */}
@@ -78,15 +107,98 @@ const Hero = () => {
 
             <br />
 
-            <span className="text-secondary dark:text-gray-400 font-semibold inline-block min-h-[1.2em]">
-              <TypeAnimation
-                sequence={RESUME_DATA.jobTitles.flatMap((role) => [role, 2000])}
-                wrapper="span"
-                speed={50}
-                deletionSpeed={65}
-                repeat={Infinity}
-                cursor={true}
-              />
+            {/**
+             * MOBILE — static title, below `md` (Tailwind's 768px breakpoint)
+             *
+             * No animation, no TypeAnimation, no AnimatePresence, no
+             * measured width, no reserved min-height — none of that
+             * machinery is needed here, because this text never changes.
+             * A static string can't cause layout shift; there's nothing
+             * to reserve space *for*. This is real, plain text (not
+             * `aria-hidden`), so it's naturally accessible to screen
+             * readers with zero extra work — no sr-only fallback needed
+             * on this branch, unlike the animated desktop branch below.
+             *
+             * No explicit font-size class: this inherits the h1's own
+             * responsive size (text-4xl below sm, text-5xl from sm up to
+             * md) exactly like the line above it, so the two lines always
+             * match in scale throughout the whole mobile range.
+             *
+             * `md:hidden` removes this from both the visual layout *and*
+             * the accessibility tree at md and up (display: none hides
+             * descendants from assistive tech too), so desktop users and
+             * screen readers never see or hear this string — only the
+             * animated version below, which is exactly the previous
+             * desktop behavior.
+             */}
+            <span className="md:hidden text-secondary dark:text-gray-400 font-semibold leading-tight">
+              MERN Stack Developer
+            </span>
+
+            {/**
+             * DESKTOP — animated cycling title, md and up, mechanism
+             * unchanged from before. Wrapped in `hidden md:inline-flex` so
+             * it only exists visually (and in the accessibility tree) at
+             * md and up — the mirror image of the mobile block above.
+             *
+             * Because this branch is now guaranteed to never render below
+             * md, its sizing no longer needs any `sm:`/base mobile variants
+             * — it can just be the single desktop value directly (text-7xl,
+             * matching the h1's own md:text-7xl), which simplifies this
+             * considerably compared to the previous version that had to
+             * serve both mobile and desktop from one element.
+             */}
+            <span className="hidden md:inline-flex md:items-center md:justify-center">
+              {/**
+               * ACCESSIBILITY — screen-reader-only static text.
+               * A title swapping every 2.5s would otherwise fire repeated
+               * announcements. Since a display:none parent removes its
+               * children from the accessibility tree too, this fallback
+               * (like the animated text itself) is automatically only
+               * exposed to screen readers at md and up — mobile users get
+               * the real static heading above instead, with no overlap.
+               */}
+              <span className="sr-only">
+                {RESUME_DATA.jobTitles.join(', ')}
+              </span>
+
+              {/**
+               * ANIMATED TITLE CONTAINER — fixed width + fixed height
+               * - `width` is inline style since it depends on runtime data
+               *   (`longestJobTitle`) Tailwind can't see at build time. `ch`
+               *   is relative to this element's own font-size.
+               * - `h-[1.2em]` is a single fixed line height — safe now that
+               *   this element only ever renders at md+, where the title
+               *   is always shown on one line.
+               * - `overflow-hidden` is a safety net against any edge case.
+               */}
+              <span
+                aria-hidden="true"
+                className="relative inline-block overflow-hidden text-secondary dark:text-gray-400 font-semibold leading-tight align-top text-7xl whitespace-nowrap h-[1.2em]"
+                style={{
+                  width: `${longestJobTitle.length + 3}ch`,
+                }}
+              >
+                {/**
+                 * CROSSFADE — AnimatePresence + absolute positioning,
+                 * unchanged mechanism. Outgoing/incoming titles overlap in
+                 * the same space inside the fixed-size box above, so the
+                 * transition itself can never cause even a transient
+                 * height change.
+                 */}
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={activeIndex}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute inset-0 flex items-center justify-center whitespace-nowrap"
+                  >
+                    {RESUME_DATA.jobTitles[activeIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
             </span>
           </motion.h1>
 
@@ -121,6 +233,7 @@ const Hero = () => {
               to="projects"
               smooth={true}
               duration={800}
+              offset={-80}
               className="w-full sm:w-auto cursor-pointer px-8 py-3.5 text-base  border-white font-bold rounded-full bg-primary text-white hover:bg-accent hover:scale-105 hover:shadow-lg transition-all duration-300 ease-out flex items-center justify-center"
             >
               View Projects
@@ -131,7 +244,8 @@ const Hero = () => {
               to="contact"
               smooth={true}
               duration={800}
-              className="w-full sm:w-auto cursor-pointer px-8 py-3.5 text-base font-bold rounded-full bg-white border-black border hover:border-blue-500 hover:text-blue-500 hover:bg-white hover:shadow-lg hover:scale-105 transition-all duration-300 ease-out flex items-center justify-center bg-linear-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparen"
+              offset={-80}
+              className="w-full sm:w-auto cursor-pointer px-8 py-3.5 text-base font-bold rounded-full bg-white border border-primary/20 text-primary hover:border-blue-500 hover:text-blue-500 hover:shadow-lg hover:scale-105 transition-all duration-300 ease-out flex items-center justify-center"
             >
               Contact Me
             </Link>
