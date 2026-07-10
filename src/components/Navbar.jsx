@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiBars3, HiXMark } from "react-icons/hi2";
-import vadivelresume from "../assets/vadivel-resume.pdf"; // Ensure the resume PDF is in the assets folder
+import{ vadivelresume} from "../assets/Vadivel-Resume.pdf"; // Ensure the resume PDF is in the assets folder
 // import Education from './Education';
 
 
