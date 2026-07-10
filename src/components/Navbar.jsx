@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HiBars3, HiXMark } from "react-icons/hi2";
 import vadivelresume from "../assets/Vadivel-Resume.pdf";
 
-const NAVBAR_HEIGHT = 80; // px — matches h-20 below, used as scroll offset
+const NAVBAR_HEIGHT = 80;
 
 const navLinks = [
   { name: "Home", to: "hero" },
@@ -14,6 +14,46 @@ const navLinks = [
   { name: "Projects", to: "projects" },
   { name: "Contact", to: "contact" },
 ];
+
+// Motion Animation Configurations
+const dropdownVariants = {
+  hidden: { opacity: 0, y: -12, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.3,
+      ease: [0.16, 1, 0.3, 1],
+      staggerChildren: 0.06,
+      delayChildren: 0.04,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -8,
+    scale: 0.99,
+    transition: { duration: 0.18, ease: "easeInOut" },
+  },
+};
+
+const linkVariants = {
+  hidden: { opacity: 0, y: -8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.25, ease: "easeOut" },
+  },
+};
+
+const buttonVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { type: "spring", stiffness: 260, damping: 20, delay: 0.25 },
+  },
+};
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,7 +68,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock background scroll smoothly without causing horizontal layout shifts
+  // Lock background scroll smoothly without layout shifts
   useEffect(() => {
     if (isMobileMenuOpen) {
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -112,68 +152,88 @@ const Navbar = () => {
           </a>
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Button Wrapper */}
         <button
           onClick={() => setIsMobileMenuOpen((prev) => !prev)}
           aria-label="Toggle Menu"
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-menu"
-          className="md:hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-primary hover:bg-gray-100 transition-colors duration-300 focus:outline-none"
+          className="md:hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-primary hover:bg-gray-100/80 transition-colors duration-300 focus:outline-none relative"
         >
-          <motion.div
-            className="w-6 h-6 flex items-center justify-center"
-            animate={{ rotate: isMobileMenuOpen ? 90 : 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          >
+          {/* <AnimatePresence mode="wait"> */}
             {isMobileMenuOpen ? (
-              <HiXMark className="w-6 h-6 shrink-0" />
+              <motion.div
+                key="close-icon"
+                initial={{ opacity: 0, rotate: -45, scale: 0.85 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 45, scale: 0.85 }}
+                transition={{ duration: 0.15 }}
+                className="absolute"
+              >
+                <HiXMark className="w-6 h-6 shrink-0" />
+              </motion.div>
             ) : (
-              <HiBars3 className="w-6 h-6 shrink-0" />
+              <motion.div
+                key="burger-icon"
+                initial={{ opacity: 0, rotate: 45, scale: 0.85 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: -45, scale: 0.85 }}
+                transition={{ duration: 0.15 }}
+                className="absolute"
+              >
+                <HiBars3 className="w-6 h-6 shrink-0" />
+              </motion.div>
             )}
-          </motion.div>
+          {/* </AnimatePresence> */}
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
+      {/* Premium Mobile Menu Dropdown Panel */}
+      {/* <AnimatePresence> */}
         {isMobileMenuOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-20 left-0 right-0 md:hidden bg-white border-b border-border shadow-xl z-40"
-          >
-            <div className="max-h-[calc(100dvh-5rem)] overflow-y-auto px-6 py-6 flex flex-col gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.to}
-                  smooth
-                  duration={800}
-                  offset={-NAVBAR_HEIGHT}
-                  spy
-                  activeClass="text-accent font-semibold"
-                  className="text-base font-medium text-secondary cursor-pointer hover:text-primary transition-colors"
-                  onClick={closeMobileMenu}
-                >
-                  {link.name}
-                </Link>
-              ))}
+          <div className="absolute top-20 left-0 right-0 px-4 sm:px-6 md:hidden pointer-events-none">
+            <motion.div
+              id="mobile-menu"
+              variants={dropdownVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="w-full max-w-lg mx-auto bg-white/90 backdrop-blur-xl border border-slate-200/80 rounded-[28px] shadow-2xl pointer-events-auto overflow-hidden z-40"
+            >
+              <div className="max-h-[calc(100dvh-7rem)] overflow-y-auto px-6 py-7 flex flex-col gap-5">
+                {navLinks.map((link) => (
+                  <motion.div key={link.name} variants={linkVariants}>
+                    <Link
+                      to={link.to}
+                      smooth
+                      duration={800}
+                      offset={-NAVBAR_HEIGHT}
+                      spy
+                      activeClass="text-blue-600 font-bold bg-slate-50/80"
+                      className="block text-base font-semibold text-slate-700 cursor-pointer px-4 py-3 rounded-2xl hover:text-slate-900 hover:bg-slate-50/60 transition-all duration-200"
+                      onClick={closeMobileMenu}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
 
-              <a
-                href={vadivelresume}
-                download="Vadivel_S_Resume.pdf"
-                onClick={closeMobileMenu}
-                className="mt-2 self-center px-6 py-2.5 text-sm font-medium bg-primary text-white rounded-full hover:bg-accent hover:shadow-lg transition-all duration-300"
-              >
-                Resume
-              </a>
-            </div>
-          </motion.div>
+                {/* Separated Staggered Action Button */}
+                <motion.div variants={buttonVariants} className="pt-2">
+                  <a
+                    href={vadivelresume}
+                    download="Vadivel_S_Resume.pdf"
+                    onClick={closeMobileMenu}
+                    className="w-full flex items-center justify-center py-3.5 text-sm font-bold bg-slate-900 text-white rounded-2xl hover:bg-slate-800 transition-colors duration-200 shadow-sm"
+                  >
+                    Resume
+                  </a>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      {/* </AnimatePresence> */}
     </motion.header>
   );
 };
