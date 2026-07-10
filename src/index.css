@@ -1,0 +1,182 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+
+
+@theme {
+  --color-primary: #111827;
+  --color-secondary: #6B7280;
+  --color-accent: #2563EB;
+  --color-border: #E5E7EB;
+  --color-bg-base: #FFFFFF;
+  --color-bg-alt: #F8FAFC;
+  --font-sans: 'Manrope', sans-serif;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-white text-primary antialiased;
+  }
+}
+/* Animated Continuous Border Glow Effect */
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-glow {
+  0% {
+    --glow-angle: 0deg;
+  }
+  100% {
+    --glow-angle: 360deg;
+  }
+}
+
+.animated-border-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 1.5rem; /* 24px */
+  z-index: 1;
+}
+
+/* Traveling gradient border pseudo-element */
+.animated-border-card::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 1.56rem;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    transparent 60%,
+    #3b82f6 80%,
+    #8b5cf6 90%,
+    #06b6d4 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: spin-glow 6s linear infinite;
+  pointer-events: none;
+  opacity: 0.65;
+  transition: opacity 0.3s ease, animation-duration 0.3s ease;
+}
+
+/* Hover acceleration and intensity boost */
+.animated-border-card:hover::before {
+  opacity: 1;
+  animation-duration: 2.5s;
+}
+/* Animated Border Glow Effect for Project Card */
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-glow {
+  0% {
+    --glow-angle: 0deg;
+  }
+  100% {
+    --glow-angle: 360deg;
+  }
+}
+
+.project-card-glow {
+  position: relative;
+  background: #ffffff;
+  border-radius: 2rem; /* 32px */
+  z-index: 1;
+}
+
+.project-card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 2.05rem;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    transparent 65%,
+    #3b82f6 80%,
+    #8b5cf6 90%,
+    #06b6d4 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: spin-glow 7s linear infinite;
+  pointer-events: none;
+  opacity: 0.3;
+  transition: opacity 0.3s ease, animation-duration 0.3s ease;
+}
+
+.project-card-glow:hover::before {
+  opacity: 1;
+  animation-duration: 3s;
+}
+
+/* Animated Continuous Border Glow Effect */
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-glow {
+  0% {
+    --glow-angle: 0deg;
+  }
+  100% {
+    --glow-angle: 360deg;
+  }
+}
+
+.contact-form-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 2rem; /* 32px */
+  z-index: 1;
+}
+
+.contact-form-card::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 2.05rem;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    transparent 65%,
+    #3b82f6 80%,
+    #8b5cf6 90%,
+    #06b6d4 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: spin-glow 7s linear infinite;
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.3s ease, animation-duration 0.3s ease;
+}
+
+.contact-form-card:hover::before {
+  opacity: 1;
+  animation-duration: 3s;
+}
+
+/* Custom Glass Toast Styling Override */
+.Toastify__toast--success {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+  color: #1e293b !important;
+}
