@@ -1,7 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { RESUME_DATA } from '../data/resume';
-import profile from '../assets/profile.jpg';
+  import {profile} from '../assets/profile.jpg';
 
 const About = () => {
   // Viewport animation configuration
