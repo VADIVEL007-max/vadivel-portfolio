@@ -201,9 +201,9 @@ const CertificationCard = ({ item, index, onView }) => {
 const CertificateModal = ({ item, onClose }) => {
   // lock background scroll while modal is open
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, []);
 

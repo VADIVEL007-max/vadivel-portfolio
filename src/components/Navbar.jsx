@@ -68,22 +68,16 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock background scroll smoothly without layout shifts
+  // Lock background scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = "hidden";
-      if (scrollbarWidth > 0) {
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
-      }
+      document.documentElement.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
+      document.documentElement.style.overflow = "";
     }
 
     return () => {
-      document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
+      document.documentElement.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
 
@@ -160,36 +154,36 @@ const Navbar = () => {
           aria-controls="mobile-menu"
           className="md:hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-primary hover:bg-gray-100/80 transition-colors duration-300 focus:outline-none relative"
         >
-          {/* <AnimatePresence mode="wait"> */}
+          <AnimatePresence mode="wait" initial={false}>
             {isMobileMenuOpen ? (
               <motion.div
                 key="close-icon"
-                initial={{ opacity: 0, rotate: -45, scale: 0.85 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: 45, scale: 0.85 }}
+                initial={{ opacity: 0, rotate: -90 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: 90 }}
                 transition={{ duration: 0.15 }}
-                className="absolute"
+                className="absolute inset-0 flex items-center justify-center"
               >
-                <HiXMark className="w-6 h-6 shrink-0" />
+                <HiXMark className="w-6 h-6" />
               </motion.div>
             ) : (
               <motion.div
                 key="burger-icon"
-                initial={{ opacity: 0, rotate: 45, scale: 0.85 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: -45, scale: 0.85 }}
+                initial={{ opacity: 0, rotate: 90 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: -90 }}
                 transition={{ duration: 0.15 }}
-                className="absolute"
+                className="absolute inset-0 flex items-center justify-center"
               >
-                <HiBars3 className="w-6 h-6 shrink-0" />
+                <HiBars3 className="w-6 h-6" />
               </motion.div>
             )}
-          {/* </AnimatePresence> */}
+          </AnimatePresence>
         </button>
       </div>
 
       {/* Premium Mobile Menu Dropdown Panel */}
-      {/* <AnimatePresence> */}
+      <AnimatePresence>
         {isMobileMenuOpen && (
           <div className="absolute top-20 left-0 right-0 px-4 sm:px-6 md:hidden pointer-events-none">
             <motion.div
@@ -233,7 +227,7 @@ const Navbar = () => {
             </motion.div>
           </div>
         )}
-      {/* </AnimatePresence> */}
+      </AnimatePresence>
     </motion.header>
   );
 };
