@@ -70,7 +70,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative overflow-hidden border-t border-border rounded-tl-lg rounded-tr-lg bg-linear-to-t from-blue-500/90 via-neutral-200 to-bg-alt pt-10 pb-2">
+      <footer className=" h-[60px]relative overflow-hidden border-t border-border rounded-tl-lg rounded-tr-lg bg-linear-to-t from-blue-500/90 via-neutral-200 to-bg-alt pt-10 pb-2">
 
         {/* Glow */}
         <div className="absolute -top-20 left-0 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
@@ -131,7 +131,7 @@ export default function Footer() {
           </motion.div>
 
           {/* Back To Top */}
-          <div className="my-14 flex justify-center">
+          <div className="my-2 flex justify-center">
 
             <motion.button
               whileHover={{ y: -4 }}
@@ -186,7 +186,7 @@ export default function Footer() {
 
       </footer>
 
-      {/* <FloatingBackToTop /> */}
+      <FloatingBackToTop />
     </>
   );
 }
