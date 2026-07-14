@@ -49,7 +49,7 @@ const EducationCard = ({ item, index }) => {
       variants={cardVariants}
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="group relative cursor-pointer rounded-[28px] border border-gray-200 bg-white p-8 shadow-[0_2px_20px_rgba(15,23,42,0.06)] transition-shadow duration-500 hover:shadow-[0_20px_50px_-12px_rgba(79,70,229,0.25)]"
+      className="group relative cursor-pointer py- rounded-[28px] border border-gray-200 bg-white p-8 shadow-[0_2px_20px_rgba(15,23,42,0.06)] transition-shadow duration-500 hover:shadow-[0_20px_50px_-12px_rgba(79,70,229,0.25)]"
     >
       {/* Soft glow on hover */}
       <span className="pointer-events-none absolute inset-0 rounded-[28px] bg-gradient-to-br from-blue-500/0 via-violet-500/0 to-indigo-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-[0.04] group-hover:from-blue-500 group-hover:via-violet-500 group-hover:to-indigo-500" />
