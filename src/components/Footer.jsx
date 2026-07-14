@@ -103,30 +103,7 @@ export default function Footer() {
 
             </div>
 
-            {/* Right */}
-            {/* <div className="md:text-right">
-
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-                Let's Connect
-              </h3>
-
-              <p className="mt-4 text-secondary leading-7">
-                Have an idea or opportunity?
-                I'd love to hear from you.
-              </p>
-
-              <motion.button
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={scrollContact}
-                className="group mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3 font-medium text-white shadow-lg"
-              >
-                Say Hello
-
-                <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-              </motion.button>
-
-            </div> */}
+           
 
           </motion.div>
 
