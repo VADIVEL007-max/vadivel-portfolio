@@ -114,7 +114,7 @@ const skillItemVariants = {
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-24 px-6 md:px-12 xl:px-24 bg-white">
+    <section id="skills" className="py-8 px-6 md:px-12 xl:px-24 bg-white">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
