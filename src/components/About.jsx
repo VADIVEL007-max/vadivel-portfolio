@@ -40,7 +40,7 @@ const About = () => {
   return (
     <section
       id="about"
-      className="py-24 px-6 md:px-12 xl:px-24 bg-white overflow-hidden"
+      className="py-20 px-6 md:px-12 xl:px-24 bg-white overflow-hidden"
     >
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
 
