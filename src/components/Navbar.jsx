@@ -131,7 +131,7 @@ const Navbar = () => {
               offset={-NAVBAR_HEIGHT}
               spy
               activeClass="text-accent font-semibold"
-              className="text-sm font-medium text-secondary cursor-pointer hover:text-primary transition-colors"
+              className="text-sm  text-black  font-extrabold cursor-pointer hover:text-accent hover:scale-125 transition-colors"
             >
               {link.name}
             </Link>
