@@ -70,7 +70,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative overflow-hidden border-t border-border bg-gradient-to-b from-white via-blue-50 to-bg-alt pt-20 pb-8">
+      <footer className="relative overflow-hidden border-t border-border rounded-tl-lg rounded-tr-lg bg-linear-to-t from-blue-500/90 via-neutral-200 to-bg-alt pt-10 pb-2">
 
         {/* Glow */}
         <div className="absolute -top-20 left-0 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
@@ -104,7 +104,7 @@ export default function Footer() {
             </div>
 
             {/* Right */}
-            <div className="md:text-right">
+            {/* <div className="md:text-right">
 
               <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">
                 Let's Connect
@@ -126,7 +126,7 @@ export default function Footer() {
                 <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
               </motion.button>
 
-            </div>
+            </div> */}
 
           </motion.div>
 
@@ -156,11 +156,11 @@ export default function Footer() {
 
           <div className="mt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
 
-            <p className="text-sm text-secondary">
+            <p className="text-sm text-black font-bold ">
               © {new Date().getFullYear()} Vadivel. All Rights Reserved.
             </p>
 
-            <p className="flex items-center gap-2 text-sm text-secondary">
+            <p className="flex items-center gap-2 text-sm text-black font-light">
 
               Made with
 
@@ -186,7 +186,7 @@ export default function Footer() {
 
       </footer>
 
-      <FloatingBackToTop />
+      {/* <FloatingBackToTop /> */}
     </>
   );
 }
