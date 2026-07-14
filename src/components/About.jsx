@@ -77,22 +77,7 @@ const About = () => {
                 className="absolute -inset-8 rounded-[44px] bg-[conic-gradient(from_0deg,rgba(59,130,246,0.35),rgba(139,92,246,0.35),rgba(59,130,246,0.35))] blur-2xl pointer-events-none"
               />
 
-              {/* Soft blue/purple glow behind the image */}
-              {/* <motion.div
-                aria-hidden="true"
-                animate={{ opacity: isHovered ? 1 : 0.5 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                className="absolute -inset-3 rounded-[36px] bg-linear-to-br from-neutral-400 via-blue-300 to-transparent blur-2xl pointer-events-none"
-              /> */}
-
-              {/* Animated gradient border — appears only on hover */}
-              {/* <motion.div
-                aria-hidden="true"
-                animate={{ opacity: isHovered ? 1 : 0 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                className="absolute -inset-[2px] rounded-[33px] bg-gradient-to-br from-cyan-500 via-yellow-500 to-neutral-400 pointer-events-none"
-              /> */}
-
+             
               {/* Tilt container — 3D rotate + growing shadow */}
               <motion.div
                 style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
@@ -191,19 +176,19 @@ const About = () => {
   , and continuously learning new technologies to become a better developer.
           </p>
 
-          {/* <div className="flex flex-col gap-2">
-            <span className="font-semibold text-primary dark:text-gray-100">Soft Skills:</span>
+          <div className="flex flex-col gap-2">
+            <span className="font-bold text-2xl text-black">Soft Skills:</span>
             <div className="flex flex-wrap gap-2">
               {RESUME_DATA.softSkills.map((skill, index) => (
                 <span
                   key={index}
-                  className="px-4 py-2 bg-bg-alt dark:bg-neutral-950 border border-border dark:border-neutral-800 rounded-full text-sm font-medium text-secondary dark:text-gray-400 hover:border-accent hover:text-accent transition-colors duration-300"
+                  className="px-4 py-2 bg-bg-alt border border-borde-800 rounded-full text-sm font-bold text-black hover:scale-105 hover:border-accent hover:text-accent transition-colors duration-300"
                 >
                   {skill}
                 </span>
               ))}
             </div>
-          </div> */}
+          </div>
         </motion.div>
 
       </div>
