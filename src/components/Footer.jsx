@@ -173,7 +173,7 @@ export default function Footer() {
                   duration: 1.5,
                 }}
               >
-                <FiHeart className="text-red-500" />
+                <FiHeart className="text-red-500 size-5" />
               </motion.span>
 
               using React & Tailwind CSS
